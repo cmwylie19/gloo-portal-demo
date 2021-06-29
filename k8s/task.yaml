@@ -33,7 +33,7 @@ spec:
     spec:
       serviceAccountName: task
       containers:
-        - image: docker.io/cmwylie19/tasks-v1:latest
+        - image: docker.io/cmwylie19/gloo-portal-demo:latest
           name: task
           env:
             - name: MONGO_URL
