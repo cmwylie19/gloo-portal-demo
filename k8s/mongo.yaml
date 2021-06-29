@@ -1,37 +1,32 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mongo-task-pvc
+  name: mo-task-pvc
 spec:
   storageClassName: generic
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 2Gi
+      storage: 500Mi
 ---
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: mongo-task-pv
+  name: mo-task-pv
   labels:
     type: local
 spec:
   storageClassName: generic
   claimRef:
     namespace: default
-    name: mongo-task-pvc
+    name: mo-task-pvc
   capacity:
-    storage: 2Gi
+    storage: 500Mi
   accessModes:
     - ReadWriteOnce
   hostPath:
     path: "/var/lib/mongo"
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: task-db
 ---
 apiVersion: apps/v1        
 kind: Deployment
@@ -43,15 +38,12 @@ spec:
   replicas: 1    
   selector: 
     matchLabels:
-      app: task-db
-      version: v1
+      app: task-db-pod
   template:
     metadata:
       labels:
-        app: task-db
-        version: v1
+        app: task-db-pod
     spec:
-      serviceAccountName: task-db
       containers:
       - name: mongodb
         volumeMounts:
@@ -61,9 +53,9 @@ spec:
         ports:
         - containerPort: 27017
       volumes:
-      - name: mongo-task-volume
+      - name: mo-task
         persistentVolumeClaim:
-          claimName: mongo-task-pvc
+          claimName: mo-task-pvc
       restartPolicy: Always
 ---
 apiVersion: v1
@@ -71,12 +63,11 @@ kind: Service
 metadata:
   labels:
     app: task-db
-  name: task-db
+  name: task-db-service
 spec:
   ports:
-    - name: mongodb
-      port: 27017
+    - port: 27017
       targetPort: 27017
   selector:
-    app: task-db
+    app: task-db-pod
   type: ClusterIP

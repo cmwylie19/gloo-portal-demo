@@ -1,0 +1,16 @@
+apiVersion: devportal.solo.io/v1alpha1
+kind: Environment
+metadata:
+  name: dev
+  namespace: default
+spec:
+  domains:
+  - "*"
+  displayInfo:
+    description: This environment is meant for developers to deploy and test their APIs.
+    displayName: Development
+  apiProducts:
+  - name: task-product
+    namespace: default
+    publishedVersions:
+    - name: v1

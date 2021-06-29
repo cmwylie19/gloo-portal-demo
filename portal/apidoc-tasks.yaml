@@ -1,0 +1,9 @@
+apiVersion: devportal.solo.io/v1alpha1
+kind: APIDoc
+metadata:
+  name: task-schema
+  namespace: default
+spec:
+  openApi:
+    content:
+      fetchUrl: https://raw.githubusercontent.com/cmwylie19/gloo-portal-demo/master/openAPI.yaml
