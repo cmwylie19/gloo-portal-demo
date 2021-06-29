@@ -1,0 +1,22 @@
+cat <<EOF | kubectl apply -f -
+apiVersion: devportal.solo.io/v1alpha1
+kind: Portal
+metadata:
+  name: task-portal
+  namespace: default
+spec:
+  displayName: Task Portal
+  description: Developer Portal for Task Service
+  banner:
+    fetchUrl: https://i.imgur.com/30Pr6iS.png
+  favicon:
+    fetchUrl: https://i.imgur.com/ATuJvM1.png
+  primaryLogo:
+    fetchUrl: https://i.imgur.com/6oDNHUX.png?1
+  customStyling: {}
+  staticPages: []
+  domains:
+  - "portal.tasks.com"
+  publishedEnvironments:
+  - name: dev
+    namespace: default

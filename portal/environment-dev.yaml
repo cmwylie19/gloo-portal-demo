@@ -5,7 +5,7 @@ metadata:
   namespace: default
 spec:
   domains:
-  - "*"
+  - "api.tasks.com"
   displayInfo:
     description: This environment is meant for developers to deploy and test their APIs.
     displayName: Development

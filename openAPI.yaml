@@ -11,9 +11,9 @@ info:
 externalDocs:
   description: Find out more about Solo.io
   url: https://solo.io
-# servers:
-# - url: https://petstore.swagger.io/v2
-# - url: http://petstore.swagger.io/v2
+servers:
+- url: http://a30dafc01ddb6471bac82ea109b66ad4-706107384.us-east-2.elb.amazonaws.com
+
 tags:
 - name: tasks
   description: CRUD operations on tasks

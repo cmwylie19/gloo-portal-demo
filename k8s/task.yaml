@@ -36,8 +36,10 @@ spec:
         - image: docker.io/cmwylie19/gloo-portal-demo:latest
           name: task
           env:
-            - name: MONGO_URL
+            - name: CONNECTION_STRING
               value: mongodb://task-db-service:27017/tasks
+            - name: PORT
+              value: :8080
           ports:
             - containerPort: 8080
               name: http

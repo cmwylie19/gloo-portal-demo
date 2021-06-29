@@ -1,0 +1,6 @@
+.env
+portal/
+k8s/
+.dockerignore
+gloo-values.yaml
+openAPI.yaml
