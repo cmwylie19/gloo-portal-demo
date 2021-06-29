@@ -1,0 +1,210 @@
+openapi: 3.0.1
+info:
+  title: Tasks Demo
+  description: 'This is a golang task service with a mongo banckend.  You can find the source code at [http://github.com/cmwylie19/gloo-portal-demo](http://github.com/cmwylie19/gloo-portal-demo). The purpose of this application is to demo the Gloo Portal from [Solo.io](https://solo.io).'
+  contact:
+    email: casey.wylie@solo.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Solo.io
+  url: https://solo.io
+servers:
+- url: https://petstore.swagger.io/v2
+- url: http://petstore.swagger.io/v2
+tags:
+- name: tasks
+  description: CRUD operations on tasks
+  externalDocs:
+    description: Find out more in the code
+    url: http://github.com/cmwylie19/gloo-portal-demo
+paths:
+  /api/tasks:
+    get:
+      tags:
+      - tasks
+      summary: Get all tasks
+      description: Returns all tasks
+      operationId: getTasks
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllTasks'
+    post:
+      tags:
+      - tasks
+      summary: Add a new task to the database
+      operationId: addTask
+      requestBody:
+        description: Task object that needs to be added to the database
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InsertedID'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+      - tasks
+      summary: Delete all tasks from the database
+      operationId: deleteTasks
+      responses:
+        202:
+          description: Delete all tasks operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deleted'
+  /api/tasks/{id}:
+    get:
+      tags:
+      - tasks
+      summary: Find task by ID
+      description: Returns a single task
+      operationId: getTask
+      parameters:
+      - name: id
+        in: path
+        description: ID of task to return
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: Task not found
+          content: {}
+    put:
+      tags:
+      - tasks
+      summary: Update an existing task
+      operationId: updateTask
+      parameters:
+      - name: id
+        in: path
+        description: ID of task to return
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Task object that needs to be updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskNoID'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+      - tasks
+      summary: Deletes a task by id
+      operationId: deleteTask
+      parameters:
+      - name: id
+        in: path
+        description: Task id to delete
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteOne'
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: Pet not found
+          content: {}
+components:
+  schemas:
+    InsertedID:
+      type: object
+      properties:
+        InsertedID:
+          type: string
+          example: "60db1b4f7eddbd76b1a38384"
+    Deleted:
+      type: object
+      properties:
+        DeletedCount:
+          type: integer
+          example: 3
+    DeleteOne:
+      type: object
+      properties:
+        DeletedCount:
+          type: integer
+          example: 1
+    AllTasks:
+      type: array
+      items:
+        type: object
+        properties:
+          _id:
+            type: string
+            example: "60db11fae4fc041c6675cacc"
+          name:
+            type: string
+            example: "Take out the trash."
+          status:
+            type: string
+            example: "true"
+    TaskNoID:
+      required:
+      - Name
+      - Status
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Take out the trash."
+        status:
+          type: string
+          example: "true"
+    Task:
+      required:
+      - Name
+      - Status
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "60db11fae4fc041c6675cacc"
+        name:
+          type: string
+          example: "Take out the trash."
+        status:
+          type: string
+          example: "true"
+
