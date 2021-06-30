@@ -1,5 +1,5 @@
 gloo:
-  enabled: true
+  enabled: true # Enables integration with Gloo Edge Enterprise
 licenseKey:
   secretRef:
     name: license

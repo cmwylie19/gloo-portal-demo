@@ -1,4 +1,3 @@
-cat <<EOF | kubectl apply -f -
 apiVersion: devportal.solo.io/v1alpha1
 kind: Portal
 metadata:
